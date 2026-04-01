@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.PAT_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN || github.token }}
           ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Generate top languages card
@@ -27,7 +27,7 @@ jobs:
           card: top-langs
           options: username=${{ github.repository_owner }}&layout=compact
           path: profile/top-langs.svg
-          token: ${{ secrets.PAT_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN || github.token }}
 
       - name: Commit cards
         if: github.event_name != 'pull_request'
