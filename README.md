@@ -1,1 +1,1 @@
-![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=justin-gabotero&layout=compact)
+![Top Langs](./profile/top-langs.svg)
