@@ -9,12 +9,16 @@ on:
     branches: [ "master" ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
+          token: ${{ secrets.PAT_TOKEN || github.token }}
           ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Generate top languages card
@@ -23,13 +27,12 @@ jobs:
           card: top-langs
           options: username=${{ github.repository_owner }}&layout=compact
           path: profile/top-langs.svg
-          token: ${{ secrets.PAT_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN || github.token }}
 
       - name: Commit cards
-        if: github.event_name != 'pull_request'
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
           git add profile/*.svg
           git commit -m "Update README cards" || exit 0
-          git push origin "${{ github.ref_name }}"
+          git push origin "HEAD:${{ github.head_ref || github.ref_name }}"
