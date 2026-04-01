@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.PAT_TOKEN || github.token }}
+          token: ${{ github.token }}
           ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Generate top languages card
